@@ -1,14 +1,36 @@
-import {
-    useState
-} from "react";
+// import {
+//     useState
+// } from "react";
 
-function useToggle(initialVal = false) {
-    // call useState, "reserve piece of state"
-    const [state, setState] = useState(initialVal);
-    const toggle = () => {
-        setState(!state);
-    };
-    // return piece of state AND a function to toggle it
-    return [state, toggle];
-}
-export default useToggle;
+// export default initialTodos => {
+//     const [gameData, setGameData] = useState(initialTodos);
+//     return {
+//         gameData,
+//         reset: resetScore => {
+//             setGameData(setGameData)
+//         },
+//         addUserScore: score => {
+//             setGameData(initalState => {
+//                 initalState += score
+//             });
+//         },
+//         toggleTodo: todoId => {
+//             const updatedTodos = todos.map(todo =>
+//                 todo.id === todoId ? {
+//                     ...todo,
+//                     completed: !todo.completed
+//                 } : todo
+//             );
+//             setTodos(updatedTodos);
+//         },
+//         editTodo: (todoId, newTask) => {
+//             const updatedTodos = todos.map(todo =>
+//                 todo.id === todoId ? {
+//                     ...todo,
+//                     task: newTask
+//                 } : todo
+//             );
+//             setTodos(updatedTodos);
+//         }
+//     };
+// };
