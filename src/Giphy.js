@@ -63,12 +63,12 @@ const Giphy = (props) => {
 
     addUserScore(props.gameCard[foundPic].pts);
 
-    //userScore > computerScore ? loss() : win();
-    if (userScore === computerScore) {
-      win();
-    } else if (userScore > computerScore) {
-      loss();
-    }
+    (userScore === computerScore) ? win() : loss();
+    // if (userScore === computerScore) {
+    //   win();
+    // } else if (userScore > computerScore) {
+    //   loss();
+    // }
   }
 
 
@@ -101,11 +101,9 @@ const Giphy = (props) => {
           </div>
 
           {/* <!-- GIF RESULTS GAME--> */}
-          <div className="row">
+          <div className="row" id="giphy-view">
 
-            <div id="giphy-view">
               {gifCard()}
-            </div>
 
           </div>
 
