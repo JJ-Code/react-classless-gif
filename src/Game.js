@@ -1,14 +1,14 @@
-import React, { useState, useEffect } from "react";
+import React, { useContext } from "react";
 import "./App.css";
 import axios from "axios"
 import Giphy from "./Giphy";
 import useInputState from "./hooks/useInputState";
-
+import { GiphyContext } from "./context/GameArrContext";
 
 
 
 const Game = () => {
-  const [gameCard, setGameCard] = useState(new Set());
+  const { gameCard, resestGameCard, setGameCard } = useContext(GiphyContext);
   const [searchWord, handleSearch, resetSearch] = useInputState("");
   let myDivToFocus = React.createRef();
 
@@ -22,18 +22,10 @@ const Game = () => {
     }
   }
 
-  const resetGame = () => {
-    setGameCard(new Set())
-  };
 
+    async function performSearch() {
 
-
-
-  useEffect(() => {
-
-    async function getData() {
-
-      resetGame()
+      resestGameCard()
       let url = "https://api.giphy.com/v1/gifs/search?q="
       let apiKey = "&api_key=39a3e436bae449eebf5904e0af9ad67c&limit=8";
       let urlToFetch = `${url}${searchWord}${apiKey}`;
@@ -46,10 +38,9 @@ const Game = () => {
       }));
 
     }
-    if (searchWord.length > 0) getData() 
-    
 
-  }, [searchWord]);
+
+  console.log(gameCard);
 
 
   return (
@@ -63,6 +54,7 @@ const Game = () => {
             <form id="giphy-form"
               onSubmit={e => {
                 e.preventDefault();
+                performSearch();
                 resetSearch(e);
                 jumpto(e);
               }}
@@ -79,7 +71,7 @@ const Game = () => {
           </div>
         </div>
       </div>
-    <Giphy myDivToFocus={myDivToFocus} gameCard={gameCard} resetGame={resetGame} />
+    <Giphy myDivToFocus={myDivToFocus}/> 
     </div> //end of main-game
 
   )//end of return 

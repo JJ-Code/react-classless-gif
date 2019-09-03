@@ -1,14 +1,12 @@
-import React from "react";
+import React, { useContext } from "react";
 import "./App.css";
 import MakeCard from "./MakeCard";
-import useGameScore from "./hooks/useGameScore";
+import { GiphyContext } from "./context/GameArrContext";
 
 
 const Giphy = (props) => {
-  const [computerScore, resetComputerScore] = useGameScore(Math.floor(Math.random() * 102) + 19)
-  const [userScore, resetUserScore, addUserScore] = useGameScore(0)
-  const [winScore, resetWinScore, setWinScore] = useGameScore(0)
-  const [lossScore, resetLossScore, setLossScore] = useGameScore(0)
+
+  const { gameCard, resestGameCard, computerScore, resetComputerScore, userScore, resetUserScore, addUserScore, winScore, setWinScore, lossScore, setLossScore } = useContext(GiphyContext);
 
   console.log(userScore)
 
@@ -27,19 +25,19 @@ const Giphy = (props) => {
     alert(message);
     resetUserScore();
     resetComputerScore();
-    return () => props.restGame();
+    return () => resestGameCard();
   };
 
 
   const gifCard = () => {
-    console.log(props.gameCard)
-    if (props.gameCard.length !== 8) {
+    console.log(gameCard)
+    if (gameCard.length !== 8) {
       return (<h2>Loading...</h2>)
     }
 
     else {
 
-      return props.gameCard.map(card => (
+      return gameCard.map(card => (
         <MakeCard key={card.id}
           id={card.id}
           url={card.url}
@@ -54,21 +52,21 @@ const Giphy = (props) => {
     // console.log(evt)
     // console.log(evt.target.dataset.id);
     const idPic = evt.target.dataset.id; //mouse object location in array
-    const foundPic = props.gameCard.findIndex(gifPic => {
+    const foundPic = gameCard.findIndex(gifPic => {
       //console.log(gifPic.id === idPic)
       return gifPic.id === idPic
     });
 
     console.log(userScore);
 
-    addUserScore(props.gameCard[foundPic].pts);
+    addUserScore(gameCard[foundPic].pts);
 
-    (userScore === computerScore) ? win() : loss();
-    // if (userScore === computerScore) {
-    //   win();
-    // } else if (userScore > computerScore) {
-    //   loss();
-    // }
+    //(userScore === computerScore) ? win() : loss();
+    if (userScore === computerScore) {
+      win();
+    } else if (userScore > computerScore) {
+      loss();
+    }
   }
 
 
@@ -103,7 +101,7 @@ const Giphy = (props) => {
           {/* <!-- GIF RESULTS GAME--> */}
           <div className="row" id="giphy-view">
 
-              {gifCard()}
+            {gifCard()}
 
           </div>
 
