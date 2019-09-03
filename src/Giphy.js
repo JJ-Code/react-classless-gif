@@ -1,28 +1,16 @@
-import React, { useContext } from "react";
+import React, { useContext, memo } from "react";
 import "./App.css";
 import MakeCard from "./MakeCard";
-import { GiphyContext } from "./context/GameArrContext";
+import { GiphyContext } from "./context/GiphyArrContext";
 import { GameContext } from "./context/GameHistoryContext";
 
 const Giphy = (props) => {
-
-  const { gameCard, resestGameCard } = useContext(GiphyContext);
+  const { gameCard } = useContext(GiphyContext)
   const { gameData, winLossReset, addUserScore } = useContext(GameContext)
 
   console.log(gameData)
 
 
-  const win = () => {
-    winLossReset("win")
-    alert("You win!");
-    return () => resestGameCard();
-  }
-
-  const loss = () => {
-    winLossReset("loss")
-    alert("You did not win, loser!");
-    return () => resestGameCard();
-  }
 
 
   const gifCard = () => {
@@ -30,9 +18,7 @@ const Giphy = (props) => {
     if (gameCard.length !== 8) {
       return (<h2>Loading...</h2>)
     }
-
     else {
-
       return gameCard.map(card => (
         <MakeCard key={card.id}
           id={card.id}
@@ -56,9 +42,9 @@ const Giphy = (props) => {
     console.log(gameCard[foundPic].pts);
     addUserScore(gameCard[foundPic].pts);
     if (gameData.userScore === gameData.computerScore) {
-      win();
+      winLossReset("win");
     } else if (gameData.userScore > gameData.computerScore) {
-      loss();
+      winLossReset("loss");
     }
   }
 
@@ -111,4 +97,4 @@ const Giphy = (props) => {
 
 
 
-export default Giphy;
+export default memo(Giphy);

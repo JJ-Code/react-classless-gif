@@ -1,25 +1,31 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
+import { GiphyContext } from "../context/GiphyArrContext";
 
 export default initialGameData => {
   const [gameData, setGameData] = useState(initialGameData);
+  const { shuffleGiphy } = useContext(GiphyContext)
   return {
     gameData,
     winLossReset: (status) => {
-      const restStatus = {
-        computerScore: Math.floor(Math.random() * 102) + 19,
-        userScore: 0,
-        winScore: (status === "win") ? initialGameData.winScore += 1 : initialGameData.winScore,
-        lossScore: (status === "loss") ? initialGameData.lossScore += 1 : initialGameData.lossScore,
-      }
-      setGameData(restStatus)
+      setGameData(currentState =>{
+        shuffleGiphy();
+        (status === "win") ? alert("You win, awesome!") : alert("You did not win, boo!");
+        const resetStatus = {
+          computerScore: Math.floor(Math.random() * 102) + 19,
+          userScore: 0,
+          winScore: (status === "win") ? currentState.winScore += 1 : currentState.winScore,
+          lossScore: (status === "loss") ? currentState.lossScore += 1 : currentState.lossScore,
+        }
+        return resetStatus;
+      })
     },
     addUserScore: score => {
-      setGameData(initialGameData => {
+      setGameData(currentState => {
         let updateStatus = {
-          computerScore: initialGameData.computerScore,
-          userScore: initialGameData.userScore += score,
-          winScore: initialGameData.winScore,
-          lossScore: initialGameData.lossScore
+          computerScore: currentState.computerScore,
+          userScore: currentState.userScore += score,
+          winScore: currentState.winScore,
+          lossScore: currentState.lossScore
         }
         return updateStatus;
       });

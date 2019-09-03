@@ -3,7 +3,7 @@ import "./App.css";
 import axios from "axios"
 import Giphy from "./Giphy";
 import useInputState from "./hooks/useInputState";
-import { GiphyContext } from "./context/GameArrContext";
+import { GiphyContext } from "./context/GiphyArrContext";
 
 
 
@@ -23,21 +23,14 @@ const Game = () => {
   }
 
 
-    async function performSearch() {
-
-      resestGameCard()
-      let url = "https://api.giphy.com/v1/gifs/search?q="
-      let apiKey = "&api_key=39a3e436bae449eebf5904e0af9ad67c&limit=8";
-      let urlToFetch = `${url}${searchWord}${apiKey}`;
-      const response = await axios.get(urlToFetch);
-      let results = response.data.data
-      setGameCard(results.map((result)=>{
-        return {url: result.images.original.url,
-        id: result.id,
-        pts: Math.floor(Math.random() * 12) + 1}
-      }));
-
-    }
+  async function performSearch() {
+    resestGameCard()
+    let url = "https://api.giphy.com/v1/gifs/search?q="
+    let apiKey = "&api_key=39a3e436bae449eebf5904e0af9ad67c&limit=8";
+    let urlToFetch = `${url}${searchWord}${apiKey}`;
+    const response = await axios.get(urlToFetch);
+    setGameCard(response.data.data)
+  }
 
 
   console.log(gameCard);
@@ -71,12 +64,12 @@ const Game = () => {
           </div>
         </div>
       </div>
-    <Giphy myDivToFocus={myDivToFocus}/> 
+      <Giphy myDivToFocus={myDivToFocus} />
     </div> //end of main-game
 
   )//end of return 
 
 } //end of Game 
 
-
 export default Game; 
+//export default memo(Game); 

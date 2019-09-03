@@ -6,14 +6,15 @@ export const GiphyContext = createContext();
 
 
 export function GiphyProvider(props) {
-  const [gameCard, resestGameCard, setGameCard] = useGameScore(new Set())
+  const [gameCard, resestGameCard, setGameCard, shuffleGiphy] = useGameScore(new Set())
 
-  
-  return (<GiphyContext.Provider value={{ gameCard, resestGameCard, setGameCard }}>
-    {props.children}
-    
-    </GiphyContext.Provider>);
-}
+
+  return (
+    <GiphyContext.Provider value={{ gameCard, resestGameCard, setGameCard, shuffleGiphy }}>
+      {props.children}
+    </GiphyContext.Provider>
+  )
+};
 
 
 
