@@ -1,19 +1,21 @@
-import React, { createContext } from "react";
-import useGameState from "../hooks/useGameState";
+import React, { createContext, useReducer } from "react";
+import gameDataReducer from "../reducer/gameData.reducer";
 
 export const GameContext = createContext();
 
-export function GameProvider(props) {
-  const defaultState = {
-    computerScore: Math.floor(Math.random() * 102) + 19,
-    userScore: 0,
-    winScore: 0,
-    lossScore: 0
-  }
+const defaultState = {
+  computerScore: Math.floor(Math.random() * 102) + 19,
+  userScore: 0,
+  winScore: 0,
+  lossScore: 0
+}
 
-  const { gameData, winLossReset, addUserScore} = useGameState(defaultState)
+export function GameProvider(props) {
+
+  const [gameData, dispatch] = useReducer(gameDataReducer, defaultState);
+
 
   return (<GameContext.Provider
-    value={{gameData, winLossReset, addUserScore}}>
+    value={{gameData, dispatch}}>
     {props.children}</GameContext.Provider>);
 }

@@ -6,7 +6,7 @@ import { GameContext } from "./context/GameHistoryContext";
 
 const Giphy = (props) => {
   const { gameCard } = useContext(GiphyContext)
-  const { gameData, winLossReset, addUserScore } = useContext(GameContext)
+  const { gameData, dispatch } = useContext(GameContext)
 
   console.log(gameData)
 
@@ -40,11 +40,14 @@ const Giphy = (props) => {
     });
     //console.log(gameData.userScore);
     console.log(gameCard[foundPic].pts);
-    addUserScore(gameCard[foundPic].pts);
+     dispatch({ type: "addUserScore", userScore: gameCard[foundPic].pts}) 
+
     if (gameData.userScore === gameData.computerScore) {
-      winLossReset("win");
+      dispatch({ type: "win"}) 
+      //alert("you win")
     } else if (gameData.userScore > gameData.computerScore) {
-      winLossReset("loss");
+      dispatch({ type: "loss" }) 
+      //alert("you loss")
     }
   }
 

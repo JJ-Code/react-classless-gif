@@ -1,5 +1,5 @@
-import React, { createContext } from "react";
-import useGiphyArr from "../hooks/useGiphyArr";
+import React, { createContext, useReducer } from "react";
+import gameCardReducer from "../reducer/gameCard.reducer";
 
 
 export const GiphyContext = createContext();
@@ -12,11 +12,10 @@ export function GiphyProvider(props) {
 	// 	pts: Math.floor(Math.random() * 12) + 1,
 	//   restGame: false
 	// }
+	const [gameCard, dispatch] = useReducer(gameCardReducer, new Set());
 
-	const { gameCard, resestGameCard, setGameCard, shuffleGiphy } = useGiphyArr(new Set())
 
-
-	return (<GiphyContext.Provider value={{ gameCard, resestGameCard, setGameCard, shuffleGiphy }}>
+	return (<GiphyContext.Provider value={{ gameCard, dispatch }}>
 		{props.children}
 
 	</GiphyContext.Provider>);
