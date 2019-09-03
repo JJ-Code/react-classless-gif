@@ -2,31 +2,27 @@ import React, { useContext } from "react";
 import "./App.css";
 import MakeCard from "./MakeCard";
 import { GiphyContext } from "./context/GameArrContext";
-
+import { GameContext } from "./context/GameHistoryContext";
 
 const Giphy = (props) => {
 
-  const { gameCard, resestGameCard, computerScore, resetComputerScore, userScore, resetUserScore, addUserScore, winScore, setWinScore, lossScore, setLossScore } = useContext(GiphyContext);
+  const { gameCard, resestGameCard } = useContext(GiphyContext);
+  const { gameData, winLossReset, addUserScore } = useContext(GameContext)
 
-  console.log(userScore)
+  console.log(gameData)
 
 
   const win = () => {
-    setWinScore(1)
-    resetGiphy("You win!");
+    winLossReset("win")
+    alert("You win!");
+    return () => resestGameCard();
   }
 
   const loss = () => {
-    setLossScore(1)
-    resetGiphy("You did not win, loser!");
-  }
-
-  const resetGiphy = (message) => {
-    alert(message);
-    resetUserScore();
-    resetComputerScore();
+    winLossReset("loss")
+    alert("You did not win, loser!");
     return () => resestGameCard();
-  };
+  }
 
 
   const gifCard = () => {
@@ -56,15 +52,12 @@ const Giphy = (props) => {
       //console.log(gifPic.id === idPic)
       return gifPic.id === idPic
     });
-
-    console.log(userScore);
-
+    //console.log(gameData.userScore);
+    console.log(gameCard[foundPic].pts);
     addUserScore(gameCard[foundPic].pts);
-
-    //(userScore === computerScore) ? win() : loss();
-    if (userScore === computerScore) {
+    if (gameData.userScore === gameData.computerScore) {
       win();
-    } else if (userScore > computerScore) {
+    } else if (gameData.userScore > gameData.computerScore) {
       loss();
     }
   }
@@ -79,22 +72,22 @@ const Giphy = (props) => {
             <h1>Step 2 - Click on giphy to match SCORE to WIN! </h1> <br /><br />
             <div className="col-md-4">
               <h2>Try to match</h2>
-              <h2 className="computer-score"> {computerScore}</h2>
+              <h2 className="computer-score"> {gameData.computerScore}</h2>
 
               <div></div>
             </div>
 
             <div className="col-md-4">
               <h2>Your current score: </h2>
-              <h2 className="user-score">{userScore}</h2>
+              <h2 className="user-score">{gameData.userScore}</h2>
             </div>
             <div className="col-md-4">
               <h2>Score Tracker</h2>
               <h3>Wins: </h3>
-              <h3 className="win-score"> {winScore} </h3>
+              <h3 className="win-score"> {gameData.winScore} </h3>
 
               <h3>Losses: </h3>
-              <h3 className="loss-score">{lossScore} </h3>
+              <h3 className="loss-score">{gameData.lossScore} </h3>
             </div>
           </div>
 
