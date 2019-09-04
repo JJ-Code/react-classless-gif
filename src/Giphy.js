@@ -5,7 +5,7 @@ import { GiphyContext } from "./context/GiphyArrContext";
 import { GameContext } from "./context/GameHistoryContext";
 
 const Giphy = (props) => {
-  const { gameCard } = useContext(GiphyContext)
+  const { gameCard, dispatchCard } = useContext(GiphyContext)
   const { gameData, dispatch } = useContext(GameContext)
 
   console.log(gameData)
@@ -44,10 +44,10 @@ const Giphy = (props) => {
 
     if (gameData.userScore === gameData.computerScore) {
       dispatch({ type: "win"}) 
-      //alert("you win")
+      dispatchCard({ type: "shuffleGiphy"}) 
     } else if (gameData.userScore > gameData.computerScore) {
       dispatch({ type: "loss" }) 
-      //alert("you loss")
+      dispatchCard({ type: "shuffleGiphy"}) 
     }
   }
 

@@ -7,6 +7,8 @@ const gameDataReducer = (state, action) => {
   // const { shuffleGiphy } = useContext(GiphyContext)
   switch (action.type) {
     case "win":
+
+    alert("You win, awesome!") 
       return state = {
           computerScore: Math.floor(Math.random() * 102) + 19,
           userScore: 0,
@@ -14,6 +16,7 @@ const gameDataReducer = (state, action) => {
           lossScore: state.lossScore
         };
     case "loss":
+      alert("You did not win, boo!")
       return state = {
           computerScore: Math.floor(Math.random() * 102) + 19,
           userScore: 0,

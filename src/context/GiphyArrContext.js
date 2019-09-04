@@ -12,10 +12,10 @@ export function GiphyProvider(props) {
 	// 	pts: Math.floor(Math.random() * 12) + 1,
 	//   restGame: false
 	// }
-	const [gameCard, dispatch] = useReducer(gameCardReducer, new Set());
+	const [gameCard, dispatchCard] = useReducer(gameCardReducer, new Set());
 
 
-	return (<GiphyContext.Provider value={{ gameCard, dispatch }}>
+	return (<GiphyContext.Provider value={{ gameCard, dispatchCard }}>
 		{props.children}
 
 	</GiphyContext.Provider>);

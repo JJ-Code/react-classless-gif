@@ -8,7 +8,7 @@ import { GiphyContext } from "./context/GiphyArrContext";
 
 
 const Game = () => {
-  const { gameCard, dispatch } = useContext(GiphyContext);
+  const { gameCard, dispatchCard } = useContext(GiphyContext);
   const [searchWord, handleSearch, resetSearch] = useInputState("");
   let myDivToFocus = React.createRef();
 
@@ -24,13 +24,12 @@ const Game = () => {
 
 
   async function performSearch() {
-    dispatch({ type: "resestGameCard" }) 
+    dispatchCard({ type: "resestGameCard" }) 
     let url = "https://api.giphy.com/v1/gifs/search?q="
     let apiKey = "&api_key=39a3e436bae449eebf5904e0af9ad67c&limit=8";
     let urlToFetch = `${url}${searchWord}${apiKey}`;
     const response = await axios.get(urlToFetch);
-   
-    dispatch({ type: "setGameCard", state: response.data.data }) 
+    dispatchCard({ type: "setGameCard", state: response.data.data }) 
   }
 
 
